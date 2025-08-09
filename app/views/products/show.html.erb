@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>商品詳細</h1>
+
+  <!-- Flash メッセージ表示 -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <div class="product-details">
+    <div class="product-info">
+      <h2><%= @product.name %></h2>
+      <p><strong>価格:</strong> ¥<%= number_with_delimiter(@product.price) %></p>
+      <p><strong>在庫数:</strong> <%= @product.stock %></p>
+      <p><strong>説明:</strong></p>
+      <div class="description">
+        <%= simple_format(@product.description) %>
+      </div>
+    </div>
+
+    <div class="order-form">
+      <h3>注文する</h3>
+      <%= form_with model: @order_history, url: orders_path, method: :post, local: true do |form| %>
+        <%= form.hidden_field :product_id, value: @product.id %>
+        
+        <div class="form-group">
+          <%= form.label :quantity, "注文数" %>
+          <%= form.number_field :quantity, min: 1, max: @product.stock, value: 1, class: "form-control" %>
+        </div>
+        
+        <% if @product.stock > 0 %>
+          <%= form.submit "注文する", class: "btn btn-primary" %>
+        <% else %>
+          <p class="text-danger">在庫切れです</p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="navigation">
+    <%= link_to "商品一覧に戻る", products_path, class: "btn btn-secondary" %>
+  </div>
+</div>

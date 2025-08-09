@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>注文履歴</h1>
+
+  <!-- Flash メッセージ表示 -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <div class="orders-list">
+    <% if @order_histories.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>注文日時</th>
+            <th>商品名</th>
+            <th>注文数</th>
+            <th>単価</th>
+            <th>合計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order_histories.each do |order_history| %>
+            <tr>
+              <td><%= order_history.ordered_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+              <td><%= link_to order_history.product.name, product_path(order_history.product) %></td>
+              <td><%= order_history.quantity %></td>
+              <td>¥<%= number_with_delimiter(order_history.product.price) %></td>
+              <td>¥<%= number_with_delimiter(order_history.product.price * order_history.quantity) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>注文履歴がありません。</p>
+    <% end %>
+  </div>
+
+  <div class="navigation">
+    <%= link_to "商品一覧", products_path, class: "btn btn-primary" %>
+    <%= link_to "新規注文", new_order_path, class: "btn btn-success" %>
+  </div>
+</div>

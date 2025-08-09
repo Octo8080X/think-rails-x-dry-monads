@@ -1,0 +1,201 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+/* 基本スタイル */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ボタンスタイル */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 4px;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* テーブルスタイル */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* フォームスタイル */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* ナビゲーションスタイル */
+.navigation {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+/* 商品詳細スタイル */
+.product-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.product-info h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.description {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.order-form {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.product-info {
+  background-color: #e9ecef;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 15px 0;
+}
+
+/* アラートスタイル */
+.text-danger {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Flash メッセージスタイル */
+.alert {
+  padding: 12px 20px;
+  margin: 15px 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeaa7;
+}
+
+.alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .product-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .table {
+    font-size: 12px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}

@@ -1,0 +1,37 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      # :cached を付与して、高速化
+      - .:/usr/src/app:cached
+      # vendor以下などホストと連携しなくてもよいものを、上書きして永続化の対象外にする。
+      # exclude volumes
+      - /usr/src/app/vendor
+      - /usr/src/app/tmp
+      - /usr/src/app/log
+      - /usr/src/app/.git
+    tty: true
+    environment:
+      - RAILS_ENV=development
+      - BINDING=0.0.0.0
+
+  db:
+    image: mysql:9.3
+    networks:
+      - default
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - ./db/mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password_root}
+
+volumes:
+  bundle:
+    driver: local

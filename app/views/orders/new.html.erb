@@ -1,0 +1,85 @@
+<div class="container">
+  <h1>新規注文</h1>
+
+  <!-- Flash メッセージ表示 -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <div class="order-form">
+    <%= form_with url: orders_path, model: @order_history, method: :post, local: true do |form| %>
+      <div class="form-group">
+        <%= form.label :product_id, "商品を選択" %>
+        <%= form.select :product_id, 
+            options_from_collection_for_select(@products, :id, :name), 
+            { prompt: "商品を選択してください" }, 
+            { class: "form-control", id: "product_select" } %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :quantity, "注文数" %>
+        <%= form.number_field :quantity, min: -5, value: 1, class: "form-control" %>
+      </div>
+      
+      <div class="product-info" id="product_info" style="display: none;">
+        <h3>選択商品情報</h3>
+        <p><strong>価格:</strong> <span id="product_price"></span></p>
+        <p><strong>在庫数:</strong> <span id="product_stock"></span></p>
+        <p><strong>説明:</strong></p>
+        <div id="product_description"></div>
+      </div>
+      
+      <%= form.submit "注文する", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <div class="navigation">
+    <%= link_to "商品一覧", products_path, class: "btn btn-secondary" %>
+    <%= link_to "注文履歴", orders_path, class: "btn btn-info" %>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const productSelect = document.getElementById('product_select');
+    const productInfo = document.getElementById('product_info');
+    const quantityInput = document.querySelector('input[name="quantity"]');
+    
+    const products = <%= raw @products.to_json(only: [:id, :name, :price, :stock, :description]) %>;
+    
+    productSelect.addEventListener('change', function() {
+      const selectedId = this.value;
+      if (selectedId) {
+        const product = products.find(p => p.id == selectedId);
+        if (product) {
+          document.getElementById('product_price').textContent = '¥' + product.price.toLocaleString();
+          document.getElementById('product_stock').textContent = product.stock;
+          document.getElementById('product_description').textContent = product.description || '';
+          quantityInput.max = product.stock;
+          productInfo.style.display = 'block';
+        }
+      } else {
+        productInfo.style.display = 'none';
+      }
+    });
+
+    // Flash メッセージの自動非表示（5秒後）
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+      setTimeout(function() {
+        alert.style.opacity = '0';
+        setTimeout(function() {
+          alert.style.display = 'none';
+        }, 300);
+      }, 5000);
+    });
+  });
+  </script>
+</div>

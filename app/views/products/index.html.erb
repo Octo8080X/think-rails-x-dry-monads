@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>商品一覧</h1>
+
+  <!-- Flash メッセージ表示 -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <div class="products-list">
+    <% if @products.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>在庫数</th>
+            <th>アクション</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td><%= product.name %></td>
+              <td>¥<%= number_with_delimiter(product.price) %></td>
+              <td><%= product.stock %></td>
+              <td>
+                <%= link_to "詳細", product_path(product), class: "btn btn-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>商品がありません。</p>
+    <% end %>
+  </div>
+
+  <div class="navigation">
+    <%= link_to "注文履歴", orders_path, class: "btn btn-secondary" %>
+    <%= link_to "新規注文", new_order_path, class: "btn btn-success" %>
+  </div>
+</div>
